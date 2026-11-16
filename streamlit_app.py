@@ -5,7 +5,7 @@ from snowflake.snowpark.functions import col
 import requests  
 url = "https://" + "my.smoothiefroot.com/api/fruit/watermelon"
 smoothiefroot_response = requests.get(url)
-st.text(smoothiefroot_response)
+st.text(smoothiefroot_response.json())
 
 # Write directly to the app
 st.title(":cup_with_straw: Customize Your Smoothie! :cup_with_straw:")
