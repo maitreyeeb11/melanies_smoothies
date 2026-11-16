@@ -14,15 +14,16 @@ st.write(
 
 name_on_order = st.text_input("Name on Smoothie:")
 st.write("The name on your smoothie is", name_on_order)
+
 # Write the private key from Streamlit Secrets to a temporary file
 with tempfile.NamedTemporaryFile(delete=False, suffix=".p8") as tmp_key:
-    tmp_key.write(st.secrets["connections"]["snowflake"]["private_key"].encode("utf-8"))
+    tmp_key.write(st.secrets["snowflake_key"]["private_key"].encode("utf-8"))
     key_path = tmp_key.name
 
-cnx=st.connection("snowflake")
-session=cnx.session()
+cnx = st.connection("snowflake", private_key_file=key_path)
+session = cnx.session()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
-#st.dataframe(data=my_dataframe, use_container_width=True)
+
 
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:'
