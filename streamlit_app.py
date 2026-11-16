@@ -30,8 +30,8 @@ pd_df = my_dataframe.to_pandas()
 
 @st.cache_data(show_spinner=False)
 def get_fruit_nutrition(search_term):
-    url = "https://" + f"://smoothiefroot.com{search_term.strip()}"
-    response = requests.get(url, timeout=10)
+    base_url = "https://my.smoothiefroot.com/api/fruit/"
+    response = requests.get(base_url + search_term.strip(), timeout=10)
     response.raise_for_status()
     return response.json()
 
@@ -47,7 +47,7 @@ if ingredients_list:
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
 
-        search_on = pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc
+        search_on = pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].squeeze()
         st.subheader(fruit_chosen + ' Nutrition Information')
 
         try:
