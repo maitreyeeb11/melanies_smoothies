@@ -48,11 +48,12 @@ if ingredients_list:
         search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
         st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
         st.subheader(fruit_chosen+' Nutrition Information')
-        # ✅ Add 'f' before the second string so {search_on} is replaced with the fruit's search value:
-        url = "https://" + f"my.smoothiefroot.com/api/fruit/{search_on}"
-
-        smoothiefroot_response = requests.get(url)
-        sf_df=st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+        try:
+            url = "https://" + f"://smoothiefroot.com{search_on}" 
+            smoothiefroot_response = requests.get(url)
+            sf_df=st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+        except Exception:
+            st.warning(f"Nutrition data unavailable for {fruit_chosen} (search value: {search_on})")
 
     #st.write(ingredients_string)
 
@@ -68,4 +69,3 @@ if ingredients_list:
         session.sql(my_insert_stmt).collect()
         
         st.success(f'Your Smoothie is ordered, {name_on_order}!', icon="✅")
-
