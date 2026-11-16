@@ -46,11 +46,7 @@ if ingredients_list:
 
         try:
             url = "https://" + f"://smoothiefroot.com{search_on}"
-            smoothiefroot_response = requests.get(
-                url,
-                headers={"User-Agent": "Mozilla/5.0"},
-                timeout=10
-            )
+            smoothiefroot_response = requests.get(url)
             sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
             time.sleep(0.2)
         except Exception:
